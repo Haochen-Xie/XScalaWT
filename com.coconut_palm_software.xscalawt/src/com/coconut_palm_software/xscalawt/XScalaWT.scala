@@ -8,6 +8,8 @@
  *
  * Contributors:
  *     David Orme - initial API and implementation
+ * 
+ * Modified by Haochen Xie on Nov. 28, 2013
  * *****************************************************************************
  */
 package com.coconut_palm_software.xscalawt
@@ -309,13 +311,13 @@ object XScalaWT {
 
   def defaultGridData = (c: Control) => GridDataFactory.defaultsFor(c).applyTo(c)
 
-  def modifiedDefaultGridData(setup: GridDataFactory => GridDataFactory) =
-    (c: Control) => setup(GridDataFactory.defaultsFor(c)).applyTo(c)
+  def modifiedDefaultGridData(setups: GridDataFactory => GridDataFactory*) =
+    (c: Control) => setups.foldRight(GridDataFactory.defaultsFor(c))(_(_)).applyTo(c)
 
   def fillGridData = (c: Control) => GridDataFactory.fillDefaults().applyTo(c)
 
-  def modifiedFillGridData(setup: GridDataFactory => GridDataFactory) =
-    (c: Control) => setup(GridDataFactory.fillDefaults()).applyTo(c)
+  def modifiedFillGridData(setups: GridDataFactory => GridDataFactory*) =
+    (c: Control) => setups.foldRight(GridDataFactory.fillDefaults())(_(_)).applyTo(c)
 
   //
   // Declarative setters here
